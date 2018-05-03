@@ -1,0 +1,130 @@
+
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{enumitem}
+
+\setlist[enumerate]{topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,leftmargin=.5cm}
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{9.1in}
+
+\newlength{\pagewidth}
+\setlength{\pagewidth}{6.5in}
+\pagestyle{empty}
+
+\def\pp{\par\noindent}
+
+\begin{document}
+
+\centerline{\bf CSE 350 -- Theory of Computation (Honors), Spring 2018}
+\medskip
+\centerline{Assignment 4}
+
+\bigskip
+\bigskip
+
+\newcounter{problemctr}
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+	Give a CFG that generates the language
+	$$ A = \{ a^ib^jc^k \mid i,j,k \geq 0 \mbox{ and } i + k = j\} $$
+
+\noindent
+$S\rightarrow IK$\\
+$I\rightarrow aIb$\\
+$I\rightarrow e$\\
+$K\rightarrow bKc$\\
+$k\rightarrow e$
+
+\bigskip
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+Show that the following language is not context free:
+$$ L = \{ a^n \mid \mbox{ n is a perfect square}\} $$
+
+Assume for the sake of contradiction that $L$ is context free.\\
+According to the pumping lemma for context free langugaes, there exists a constant pumping length $p$ for which any string $s$ in the language can be written as $s=uvwxy$ where:
+\begin{enumerate}
+    \item $|vwx|\leq p$
+    \item $|vx|\geq 1$
+    \item $uv^nwx^ny \in L$ for all $n\geq0$
+\end{enumerate}
+
+We take string $a^{p^2}\in L$. By condition 1, there must be substrings $v=a^j,x=a^k,0<j+k\leq p$ that can be pumped $n$ times where $n\geq0$ and the string will be in the language.\\
+This means $\forall n\geq0, a^{p^2+ni}\in L,0<i\leq p$. Suppose we pump the substrings once. $a^{p^2+n}\in L,0<i\leq p$.\\
+However we know that the next longest word in the language is $a^{(p+1)^2}=a^{p^2+2p+1}$.\\
+We arrive at a contradition since $2p+1>p\geq n \rightarrow 2p+1>n$, meaning $a^{p^2+ni}\not\in L$
+
+\bigskip
+\bigskip
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+\noindent Let $\Sigma=\{0,1\}$ and let B be the collection of strings that contain at least one 1 in their second half. In other words,\
+$B=\{uv \mid u\in\Sigma^*, v\in\Sigma^ *1\Sigma^* \mbox{ and } |u|\geq|v|\}$.
+Give a PDA that recognizes $B$.\\
+$k: \{s,a,h\}$\\
+$\Sigma: \{0,1\}$\\
+$\delta:$
+\begin{itemize}
+    \item $(s,0,e)\rightarrow(s,0)$
+    \item $(s,1,e)\rightarrow(s,1)$
+    \item $(s,\Sigma,e)\rightarrow(a,e)$
+    \item $(s,e,e)\rightarrow(a,e)$
+    \item $(a,0,\Sigma)\rightarrow(a,e)$
+    \item $(a,1,\Sigma)\rightarrow(h,e)$
+    \item $(h,\Sigma,\Sigma)\rightarrow(h,e)$
+\end{itemize}
+$s:s$\\
+$H:\{h\}$
+\bigskip
+\bigskip
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+\begin{enumerate}
+	\item[a.]
+	Show that the language $F=\{a^i b^j c^k \mid i,j,k \geqslant 0 \mbox{ and if } i=1 \mbox{ then } j=k\}$ satisfies the conditions of the pumping lemma for {\bf regular languages}.
+	\item[b.]
+	Show that despite this, $F$ is not regular.\\
+\end{enumerate}
+
+\noindent
+a.\\
+According to the pumping lemma for regular langugaes, there exists a constant pumping length $p$ for which any string $s$ in the language can be written as $s=xy^nz$ where:
+\indent
+\begin{enumerate}
+    \item $|y|\geq 1$
+    \item $|xy|\leq p$
+    \item $xy^nz \in L$ for all $n\geq0$\\
+\end{enumerate}
+
+\noindent
+Let us consider two complementary subsets of $L$.\\
+\indent 1. $F^1=\{a^i b^j c^k \mid i,j,k\geq0, i\neq1\}$ - recognize that this is $a^*b^*c^*-ab^*c^*$\\
+\indent 2. $F^2=\{a^i b^j c^k \mid i,j,k\geq0, i=1, j=k\}$\\
+In the first case, we can pump any single character substring and it will remain in the language.
+In the second case, if we let $v=a$, $a^1b^*c^*$ is in the language by definition while pumping it results in a string in $F^1$.\\
+
+\noindent
+b.\\
+The Myhill Nerode theorem states that a language is regular if and only if there are a finite number of equivalence classes. This means if there are an infinite number of equivalence classes, then the language is not regular.\\
+By the definition of equivalence, we know that two strings $x,y$ are in the same equivalence class if $\forall z, xz\in F \leftrightarrow yz\in F$.\\
+We consider the set $G=\{a^i b^j c^k \mid i,j,k\geq0, i=1, j>k\}$. We see that $j=k$ for strings in $F$, so for any given $g=a b^j c^k, j>k$, there exists an equivalence class for strings where $z=c^{j-k}$ such that $gz\in F$.\\
+This means there is an equivalence class for all unique solutions to $j-k, j>k\geq0$, which is infinite. By the Myhill Nerode theorem, we can conclude that there are an infinite number of equivalence classes for $F$.\\
+
+---\\
+Citations:\\
+Johnny So - "discussion over brunch" - discussed potential ways to prove non regularity
+\end{document}

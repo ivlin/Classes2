@@ -1,0 +1,117 @@
+
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{changepage}
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{9.1in}
+
+\newlength{\pagewidth}
+\setlength{\pagewidth}{6.5in}
+\pagestyle{empty}
+
+\def\pp{\par\noindent}
+
+\newenvironment{mathline}{\begin{adjustwidth}{0.5cm}{}}{\end{adjustwidth}}
+
+\begin{document}
+
+\centerline{\bf CSE 350 -- Theory of Computation (Honors), Spring 2018}
+\medskip
+\centerline{Assignment 5}
+\bigskip
+\bigskip
+
+\newcounter{problemctr}
+
+\bigskip
+\bigskip
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+\noindent Show that languages semi-decidable by a Turing machine are closed under the operations of:
+
+\noindent(a) Union
+
+\begin{mathline}
+If two languages are semidecidable by a Turing machine, then their union is also semidecidable. By passing the input through both machines, we accept the string if either machine halts. If neither halts, then the union doesn't halt.
+\end{mathline}
+
+\noindent(b) Concatenation
+
+\bigskip
+\bigskip
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+\noindent Give the algorithm a Turing machine would use to decide the language $L = \{a^{n^2} | n \geq 0\}$.
+
+\bigskip
+\bigskip
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+\noindent Define the language $L = \{``M,w" |\ M\ accepts\ w\}$ \pp
+
+\noindent This is known as the acceptance problem for Turing machines. Prove
+that the acceptance problem is undecidable by reducing to the halting problem.
+
+
+\bigskip
+\bigskip
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+\noindent Say that a \emph{write-once Turing machine} is a
+single-taped Turing machine that can alter each tape square at most
+once (including the input portion of the tape).  Show that this
+variant Turing machine model is equivalent to the ordinary Turing
+machine model.
+
+\noindent \emph{Hint:} As a first step, consider the case where the
+Turing machine may alter each tape square at most twice.  Use lots
+of tape.
+
+\pagebreak
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$ (Extra Credit)\pp
+\noindent
+
+\noindent
+A group of $n$ prisoners, numbered $1$ to $n$, have been given a game. The prison warden has told them that if they win, they will all be set free. Otherwise, they will all die.
+
+\bigskip
+The game rules are as follows:
+
+\bigskip
+There is a room with $n$ boxes in a row. Inside each box is an integer between $1$ and $n$. Each box contains a different number, so that for every prisoner, there is one box with their number in it.
+
+\bigskip
+One at a time, each prisoner must enter the room and open up to $n/2$ boxes. If any prisoner fails to open the box with their number in it, all the prisoners lose. If every prisoner succeeds in finding their number, they all win.
+
+\bigskip
+After each prisoner leaves the room, the prison warden resets the room to look exactly like how it was before. Furthermore, once the game has started, the prisoners cannot communicate.
+
+\bigskip
+\bigskip
+\noindent
+Your job is to devise a strategy for the prisoners that has a significant probability of succeeding no matter how many prisoners there are. Specifically, if the probability that your strategy succeeds with $n$ prisoners is $P(n)$, then your strategy must satisfy $\lim_{n\rightarrow\infty} P(n) \neq 0$. For simplicity, you can assume that $n$ is even.s
+\end{document}

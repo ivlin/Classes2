@@ -1,0 +1,143 @@
+
+\documentclass[11pt]{article}
+
+\usepackage{graphicx} \usepackage{float} \usepackage{epstopdf}
+\usepackage{xcolor}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{changepage}
+
+\newenvironment{mathline}{\begin{adjustwidth}{1cm}{}}{\end{adjustwidth}}
+
+\renewcommand{\baselinestretch}{1.2} \setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{9.1in}
+
+\newlength{\pagewidth} \setlength{\pagewidth}{6.5in} \pagestyle{empty}
+
+\def\pp{\par\noindent}
+
+\begin{document}
+
+\centerline{\bf CSE 350 -- Theory of Computation (Honors), Spring 2018}
+\medskip
+\centerline{Assignment 1}
+\bigskip
+\bigskip
+\newcounter{problemctr}
+
+\centerline{\bf Part A}
+
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Let {\em T} be a transitive
+relation. Prove carefully or give a counterexample for the following
+statements.
+
+\noindent
+(1) The symmetric closure of {\em T} is transitive.\\
+\begin{mathline}
+False. There exists a counterexample that proves this.\\*
+Let $T={(a,b)}$\\
+The symmetric closure of T is $S(T)=\{(a,b),(b,a)\}$\\
+Since $(a,b)$, $(b,a)$ exists in $S(T)$, $(a,a)$ and $(b,b)$ must also exist for the symmetric closure to be transitive.\\
+\end{mathline}
+
+\noindent
+(2) The reflexive closure of {\em T} is transitive.\\
+\begin{mathline}
+True. The set difference between a transitive relation $T$ on set $S$ and its reflexive closure $R(T)$ is $R(T)-T=\{(x,x)|x\in S\}$ using the definition of the reflexive closure.\\
+We will prove that for every new pair $(x,x)$ added, the set will remain transitive.\\
+The definition of a transitive relation is that $(a,b),(b,c)\in R,\rightarrow (a,c)\in R$. So for any new element, $(x,x)$, there are three cases we must consider.
+\begin{enumerate}
+    \item The case where $(x,x),(x,x)\in T$: $(x,x),(x,x)\in T\rightarrow (x,x) \in T$ - true by the condition for the case
+    \item The case where $(x,x),(x,y)\in T$: $(x,x),(x,y)\in T\rightarrow (x,y) \in T$ - true by the condition for the case
+    \item The case where $(w,x),(x,x)\in T$: $(w,x),(x,x)\in T\rightarrow (w,x) \in T$ - true by the condition for the case
+\end{enumerate}
+Since any for element in $R(T)-T=\{(x,x)|x\in S\}$ that is added to the transitive relation will maintain the transitive property of that relation, we conclude that $R(T)$ is transitive.
+\end{mathline}
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Prove that in any group of more
+than one person there are always two people that know the same number of people
+within the group. Assume that knowing is symmetric.\\
+
+\begin{mathline}
+Proof by contradiction.\\
+Let us assume for sake of contradiction that each of $n$ people knows a different amount of people from $0$ to $n-1$ other people, assuming they don't know themselves (in which case it would be from $1$ to $n$).\\
+However, since the person who knows the $n-1$ other people would know everyone else at the party and knowing is symmetric, all other people at the party would know that person. Therefore, no one at the party can know less than $1$ person. This contradicts our original assumption, proving that in any group of more than one person, there are always two people that know the same number of people in the group.\\
+\end{mathline}
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp For each of the following, state
+whether the result can be finite, countably infinite, or uncountable (no proof
+required). There may be more than one correct answer.
+
+\noindent
+(1) The union of two uncountable sets
+
+\noindent
+(2) The power set of a countably infinite set
+
+\noindent
+(3) The intersection of two uncountable sets
+
+\noindent
+(4) The intersection of countably many uncountable sets
+
+\noindent
+(5) The set difference of two uncountable sets
+
+\noindent
+(6) The union of uncountably many countably infinite sets\\
+
+
+\noindent
+\begin{tabular}{|l|l|l|l|}
+\hline
+& Finite & Countably Infinite & Uncountable\\
+\hline
+The union of two uncountable sets &  &  & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: $\mathbb{R}\cup\mathbb{R}=\mathbb{R}$, which is uncountable}\\
+\hline
+The power set of a countably infinite set & & & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: $P(\mathbb{N})$, which is uncountable}\\
+\hline
+The intersection of two uncountable sets & X & X & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: $\mathbb{R}\cap\mathbb{R}=\mathbb{R}$, which is uncountable}\\
+\multicolumn{4}{|l|}{Ex: $(\mathbb{N}\cup[0,1])\cap(\mathbb{N}\cup[1,2])=\mathbb{N}$, which is countably infinite}\\
+\multicolumn{4}{|l|}{Ex: $[0,1]\cap[1,2]=\{1\}$, which is finite}\\
+\hline
+The intersection of countably many uncountable sets & X & X & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: $\mathbb{R}\cap\mathbb{R}\cap...=\mathbb{R}$, i.e. intersection of countably infinite sets of the real numbers is uncountable}\\
+\multicolumn{4}{|l|}{Ex: $[0,1]\cap[1,2]\cap...=\mathbb{N}$, i.e. intersection of reals between each natural number is countably infinite}\\
+\multicolumn{4}{|l|}{Ex: $[0,1]\cap[1,2]\cap[1,2]\cap...=\emptyset$, i.e. intersection of at least 1 disjoint uncountably infinite sets is finite}\\
+\hline
+The set difference of two uncountable sets & X & X & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: $\mathbb{R}-[0,1]=(-\infty,0)\cup(1,\infty)$, which is uncountable}\\
+\multicolumn{4}{|l|}{Ex: $(\mathbb{N}\cup[-1,0])-[-1,0]=\mathbb{N}$, which is countably infinite}\\
+\multicolumn{4}{|l|}{Ex: $\mathbb{R}-\mathbb{R}=\emptyset$, which is finite}\\
+\hline
+The union of uncountably many countably infinite sets& & X & X\\
+\hline
+\multicolumn{4}{|l|}{Ex: union of all sets S where S is the union of $\mathbb{N}$ and a real number is $\mathbb{R}$, which is uncountable}\\
+\multicolumn{4}{|l|}{Ex: union of $\mathbb{N}$ a countably infinite number of times is $\mathbb{N}$, which is countably infinite}\\
+\hline
+\end{tabular}
+
+\bigskip
+
+\end{document}

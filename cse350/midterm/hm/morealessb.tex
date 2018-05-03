@@ -1,0 +1,44 @@
+
+
+
+
+
+\newpage
+\addtocounter{problemctr}{1}
+\noindent
+{\bf
+Problem \theproblemctr.  (\themorealessb \xspace points)}
+\swallow{ (\themorealessbtime\xspace minutes)}
+
+\smallskip
+
+\noindent
+In class, we learned several methods to prove that a language is non-regular. Using \textbf{one of the three} methods given below, show that the language $L = \{a^nb^t | n \ge t\}$ is NOT regular. Indicate your choice by writing a checkmark on the line provided.
+
+\bigskip
+
+For each additional proof you provide, you will get \textbf{$5$ points of extra credit}. Clearly indicate which proof method(s) you are using for extra credit by writing ``EC'' on the line provided.
+
+\bigskip
+
+\begin{enumerate}
+\item[\rule{1cm}{.01in}   a)] Distinguishability / Myhill-Nerode Theorem\\
+
+By the Myhill Nerode Theorem, a language is regular if and only if there are finite equivalence classes.\\
+However, for $w_1=a^ib^t, i\geq t, w_2=a^jb^t, j\geq t$, if $i\neq j$, $w_1$ and $w_2$ will be in 2 different equivalence classes since appending $b^{max\{i,j\}-t+1}$ will cause one to be in the language and the other to not be in the language.\\
+Since for $t=0, i,j\in\mathbb{N}$, there are infinite equivalence classes meaning L is not regular.
+
+\item[\rule{1cm}{.01in}   b)] Closure Properties
+
+\vspace{0.33\textheight}
+
+\newpage
+\item[\rule{1cm}{.01in}   c)] Pumping Lemma (indicate which version you are using)
+
+This will be a proof by contradiction.\\
+We will assume for sake of contradiction that $L=\{a^nb^t|n\geq t\}$ is regular.\\
+By the strong pumping lemma, there exists a value k for all strings w such that $|w|\geq k$, $w=xyz$, $|xy|\leq k$, $|y|>0$, and $\forall n\geq 0, xy^nz\in L$ where $n\geq 0$.\\
+Since k is a constant, we pick a string in the language, $w=a^kb^k$ Since $|w|>k$, by the strong pumping lemma, some nonempty substring occurring within the first k characters can be repeated $n$ times where $n\geq0$ and the string will be in the language.\\
+Since the first $k$ characters are 'a' and the pumping string must be nonzero, the pumping string is a nonzero, length-$p$ string of 'a's. By the lemma, $xy^nz\in L$ for $n\geq 0$. So $xy^0z\in L$. This means $a^{k-p}b^k\in L, p>0$. This contradicts the definition of the language which states $n\geq t$.\\
+So we have roven though contradiction L is not regular.
+\end{enumerate}

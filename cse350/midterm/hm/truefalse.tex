@@ -1,0 +1,80 @@
+
+
+
+
+
+\newpage
+\addtocounter{problemctr}{1}
+\noindent
+{\bf
+Problem \theproblemctr.  (\thetruefalse \xspace points)}
+\swallow{ (\thetruefalsetime\xspace minutes)}
+\smallskip
+
+\noindent
+\textbf{Please give a one-sentence justification for each question
+	revealing your thinking.}
+\\
+
+
+
+\newcommand{\tfspacing}{\vspace{2cm}}
+
+\begin{enumerate}[label=(\alph*) {\bf ~~~T~~~~F~~~~ },leftmargin=*]
+
+
+
+
+
+
+
+
+
+\item If $\Sigma$ is a finite set, then $\Sigma^*$ is countable.
+
+\textbf{True}. If we let each element in $\Sigma$ map to an integer, every word in $\Sigma^*$ will be a concatenation of integers, mapping to an element in $\mathbb{N}$.
+\tfspacing
+
+\item If $L$ and $L_1$ are regular, and $L = L_1 \cup L_2$, then $L_2$ is regular.
+
+\textbf{False}. If $L_2$ is the union of the complement of $L_1$ and a nonregular language, $L_1\cup L_2=\Sigma^*$, which is regular.
+\tfspacing
+
+\item If $n$ is the length of a string and $m$ is the length of the pattern, then the KMP string matching algorithm runs in $O(n+m)$ steps.
+
+\textbf{True}. Every iteration of KMP increments either the progress reading through the input string by 1 or the prograss reading through the pattern by 1.
+\tfspacing
+
+\item The intersection of two uncountably infinite languages could be countably infinite.
+
+\textbf{True}. We can consider the languages representing real numbers in the ranges $\mathbb{N}\cup[0,1]$ and $\mathbb{N}\cup[1,2]$. The intersection would be the language of strings representing natural numbers, which map to their numeric forms.
+\tfspacing
+
+\item The language of strings in which the substrings ``ab'' and ``ba'' appear the same
+number of times is regular.
+
+\textbf{True}.There are a finite number of equivalence classes since the number of "ab", "ba" only differ by at most 1 assuming $\Sigma=\{a,b\}$ since any consecutive repetition of one string will generate an instance of the other.
+\tfspacing
+
+\item If there exists  $w=xyz\in L$, such that for all $n\geq0$, $xy^nz \in L$, then $L$ is regular.
+
+\textbf{False}. Let $L=xy^*z\cup a^nb^n$ - since $a^nb^n$ is not regular, the subset of the language recognized by that pattern is not representable by a DFA, meaning L is not regular.
+\tfspacing
+
+\item There are countably many regular languages on a fixed alphabet.
+
+\textbf{True}. A regular language can be represented by a regular expression, and since the number of characters in a regular expression is finite and the size of the expression is finite, the number of regular expressions using an alphabet and the number of regular languages on it are countably infinite.
+\tfspacing
+
+\item   In class we saw that if you take a homing sequence and tack extra characters onto the end, it stays a homing sequence.  Suppose that you tack them onto the beginning instead.  You still have a homing sequence.
+
+\textbf{True}. Homing sequences work regardless of where one starts - it only matches a unique output to some final state and prepending characters to the beginning doesn't disrupt the mapping of unique outputs to final states.
+
+\end{enumerate}
+
+
+
+
+
+
+

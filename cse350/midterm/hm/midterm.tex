@@ -1,0 +1,279 @@
+\documentclass[12pt,fullpage]{article}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{fullpage}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{paralist}
+\usepackage{algorithm, algpseudocode}
+
+\usepackage{enumitem}
+
+
+
+\newcommand{\swallow}[1]{#1}
+
+\renewcommand{\swallow}[1]{}
+
+
+
+\usetikzlibrary{arrows}
+\special{papersize=8.5in,11in}
+
+\newcommand{\mab}[1]{{\color{red}{\bf \sf \footnotesize Michael:} \sf \scriptsize  #1}}
+
+\newcommand{\dzejla}[1]{{\color{blue}{\bf \sf \footnotesize Dzejla:} \sf \scriptsize  #1}}
+
+\newcommand{\twodots}{\mathinner{\ldotp\ldotp}}
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\litlow}[1]{\mathord{\mathcode`\-="702D\sf #1\mathcode`\-="2200}}
+\newcommand{\lit}[1]{\ensuremath{\litlow{#1}}}
+
+\newcommand{\defn}[1] {{\textit{\textbf{\myboldmath #1\/}}}}
+\newcommand{\myboldmath}{\boldmath}
+
+\newcommand{\junk}[1]{}
+
+
+
+
+\newtheorem{theorem}            {Theorem}
+\newtheorem{claim}[theorem]     {Claim}
+\newtheorem{xample}             {Example}
+\newenvironment{example}        {\begin{xample}\rm}{\end{xample}}
+
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+
+
+
+\def\compactify{\itemsep=0pt \topsep=0pt \partopsep=0pt \parsep=0pt}
+\let\latexusecounter=\usecounter
+\newenvironment{CompactItemize}
+  {\def\usecounter{\compactify\latexusecounter}
+   \begin{itemize}}
+  {\end{itemize}\let\usecounter=\latexusecounter}
+\newenvironment{CompactEnumerate}
+  {\def\usecounter{\compactify\latexusecounter}
+   \begin{enumerate}}
+  {\end{enumerate}\let\usecounter=\latexusecounter}
+
+
+\let\latexcite=\cite
+\def\cite{\nolinebreak\latexcite}
+\let\latexref=\ref
+\def\ref{\nolinebreak\latexref}
+
+
+
+
+
+\iffalse
+\newcommand{\algorithm}[1]{
+
+{\rm
+\begin{center}
+\begin{tabbing}
+while \= while \= while \= while \= while \= while \= while \= while \= \kill
+#1
+\end{tabbing}
+\end{center}
+}
+
+}
+\fi
+
+\newcounter{problemctr}
+\addtocounter{problemctr}{0}
+
+
+\newcounter{totalpoints}
+\newcounter{totaltime}
+
+\newcommand{\docounters}[3]{
+    \newcounter{#1}
+    \addtocounter{#1}{#2}
+
+
+    \newcounter{#1time}
+    \addtocounter{#1time}{#3}
+
+
+    \addtocounter{totalpoints}{#2}
+    \addtocounter{totaltime}{#3}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newcommand{\newproblem}[5]{
+    \newcommand{#1} {
+        \newpage
+        \addtocounter{problemctr}{1}
+        \noindent
+        {\bf Problem \theproblemctr.  (#3\xspace points)}
+        \swallow{ (#4\xspace minutes)}
+
+        \smallskip
+        #5
+    }
+    \addtocounter{totalpoints}{#3}
+    \addtocounter{totaltime}{#4}
+    \newcommand{#2}{#3}
+}
+
+
+
+
+
+
+
+\input{counters-midterm}
+
+
+\begin{document}
+
+
+
+{\bf
+\noindent
+CSE 350 --  Honors Theory of Computation\hfill             Midterm Exam\\
+Michael A. Bender\hfill      April 5, 2018\\
+}
+\rule{\linewidth}{.01in}
+\begin{center}
+{\bf ~~~}
+\end{center}
+
+
+\medskip
+
+Name: \rule{2.625in}{.01in} ID \#: \rule{2.5in}{.01in}\\[\bigskipamount]
+
+
+
+
+
+\noindent {\bf INSTRUCTIONS:}
+\begin{compactitem}
+\item Except for your proofs, your answers should be at most $1$ or
+  $2$ sentences (excluding work.)
+\item This is a closed book, closed notes exam.
+\item Check to see that you have 12 pages including this cover and
+  scratch pages.
+
+\item Read all the problems before starting work.
+\item Think before you write.
+\item If you leave a question blank or write just ``I do not know,''
+  you get 25\
+\item Good luck!!
+\end{compactitem}
+
+Academic integrity is expected of all students at all times, whether
+in the presence or absence of members of the faculty.
+
+Understanding this, I declare that I shall not give, use, or receive
+unauthorized aid in this examination.  I have been warned that if I
+am caught cheating (either receiving or giving unauthorized aid) I
+will get a ``Q'' grade for this course, and a letter will be sent to
+the Committee on Academic Standing and Appeals (CASA) requesting
+that an academic dishonesty notation be placed on my transcript.
+Further action against me may also be taken.
+
+
+
+\noindent
+
+Signature\footnote{No ``I dunno'' points for leaving this blank. \smiley} \rule{2.625in}{.01in}
+
+
+
+
+
+
+\nopagebreak
+
+
+
+\begin{center}
+
+\begin{tabular}{||c|c|c||} \hline
+Problem&Score&Maximum\\ \hline
+{\small your signature}&              \hspace{0.5in}          &        \thenamesign \\ \hline
+1&& \thetruefalse\\ \hline
+2&& \thealllanguagesregular\\ \hline
+3&& \thedfastates\\ \hline
+4&& \themorealessb\\ \hline
+5&& \theinsert\\ \hline
+{\small extra credit}&& 10\\ \hline
+ Total& &\thetotalpoints\\ \hline
+\end{tabular}
+\end{center}
+
+\swallow{
+Total minutes: \thetotaltime\xspace and Total points: \thetotalpoints.}
+
+
+
+
+
+\sloppy
+
+\input{pumpinglemmadef}
+
+\input{truefalse}
+\input{alllanguagesregular}
+\input{dfa-states}
+
+
+
+
+
+
+\input{insert}
+\input{morealessb}
+
+
+
+
+
+
+
+\newpage
+{\bf \begin{center} Scratch Paper
+
+
+\newpage
+Scratch Paper
+
+
+\newpage
+Scratch Paper
+
+
+
+
+
+
+\end{center}}
+
+\end{document}

@@ -1,0 +1,101 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\setlist[enumerate]{topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex,leftmargin=.5cm}
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{9.1in}
+
+\newlength{\pagewidth}
+\setlength{\pagewidth}{6.5in}
+\pagestyle{empty}
+
+\def\pp{\par\noindent}
+
+\begin{document}
+
+\centerline{\bf CSE 350 -- Theory of Computation (Honors), Spring 2018}
+\medskip
+\centerline{Assignment 3}
+
+\newcounter{problemctr}
+
+\addtocounter{problemctr}{1}
+
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+Consider the pattern string $P = $ ``abracadabra''.
+
+\begin{enumerate}
+  \item[(a)] Find the borders of each prefix of $P$.\\
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        Original String & Prefix Border & & Suffix Border\\
+        \hline
+        abracadabra& abra & cad & abra \\
+        \hline
+        abracadabr& abr & acad &abr\\
+        \hline
+        abracadab& & abracadab& \\
+        \hline
+        abracada& a&bracad&a \\
+        \hline
+        abracad& & abracad & \\
+        \hline
+        abraca& a & brac & a \\
+        \hline
+        abrac& & abrac & \\
+        \hline
+        abra& a & br & a \\
+        \hline
+        abr& & abr & \\
+        \hline
+        ab& & ab & \\
+        \hline
+        a& & a & \\
+        \hline
+    \end{tabular}
+    \bigskip
+  \item[(b)]
+    Construct the Knuth-Morris-Pratt mismatch table for $P$.
+
+    {\it Example:} The mismatch table for the string ``abcabd'' is
+
+    \begin{tabular}{|c c c c c c c c c c c|}
+      \hline
+      a&b&r&a&c&a&d&a&b&r&a\\
+      \hline
+      0&0&0&0&1&0&1&0&1&2&3\\
+      \hline
+    \end{tabular}
+\end{enumerate}
+
+\bigskip
+\addtocounter{problemctr}{1}
+\noindent $\underline{\rm Problem\ \theproblemctr}$\pp
+
+Construct a homing sequence for the DFA.
+
+\begin{tabular}{|c| c c c |c|}
+    \hline
+        Start & a$\rightarrow$ & a$\rightarrow$ &  & End\\
+    \hline
+        0 & N & A & N & 0\\
+    \hline
+        1 & A & A & N & 0\\
+    \hline
+        2 & A & N & A & 2\\
+    \hline
+        3 & N & A & A & 2\\
+    \hline
+\end{tabular}
+\end{document}

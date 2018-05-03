@@ -1,0 +1,38 @@
+
+
+
+
+
+\newpage
+\addtocounter{problemctr}{1}
+\noindent
+{\bf
+Problem \theproblemctr.  (\thealllanguagesregular \xspace points)}
+\swallow{ (\thealllanguagesregulartime\xspace minutes)}
+
+\smallskip
+
+\noindent
+Given below is a proof to show that all languages are regular. State very
+clearly and explicitly what is wrong with the following proof and why.
+\bigskip\bigskip
+
+The proof is by induction on the size of the language.
+
+\bigskip
+
+{\bf Base cases:} $n \in \{ 0, 1 \}$
+
+The empty set is a regular language, and any one-element set is a regular language. Therefore every language of size $0$ or $1$ is regular.
+
+\bigskip
+
+{\bf Inductive step:} Assume that all languages of size $n$ are regular. Let $L$ be any language of size $n+1$, and choose some string $w \in L$. Then $|L-\{w\}| = n$, so by the inductive hypothesis, $L-\{w\}$ is regular. Since $L = \{w\} \cup (L-\{w\})$ and regular languages are closed under union, $L$ is regular. Since we assumed nothing about $L$ other than its size, any language of size $n+1$ is regular.
+
+\bigskip
+
+Therefore, by induction, all languages are regular.
+
+\bigskip
+
+The problem with this proof is that it does not take into account countably infinite languages where we can't simply assume a size $(\infty-1)$ language is regular to prove a size $\infty$ language is also regular since both are essentially equivalent.

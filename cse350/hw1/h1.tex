@@ -1,0 +1,146 @@
+
+\documentclass[11pt]{article}
+
+\usepackage{graphicx} \usepackage{float} \usepackage{epstopdf}
+\usepackage{xcolor}
+
+\renewcommand{\baselinestretch}{1.2} \setlength{\topmargin}{-0.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{9.1in}
+
+\newlength{\pagewidth} \setlength{\pagewidth}{6.5in} \pagestyle{empty}
+
+\def\pp{\par\noindent}
+
+\begin{document}
+
+\begin{flushright}
+
+                 \textcopyright 2018 Michael A. Bender
+\end{flushright}
+\centerline{\bf CSE 350 -- Theory of Computation (Honors), Spring 2018}
+\medskip
+\centerline{Assignment 1}
+\bigskip
+\bigskip
+
+You should write your problem set solutions using latex. For the Macintosh,
+install Mactex and use Texshop. For Windows, install Miktex and use WinEdt or
+some other editor. For linux, install texlive-full. For drawing figures, I
+recommend using xfig, Ipe, inkscape, or the Mac tool Omnigraffle.
+
+No late problem sets accepted.
+
+
+
+
+
+\bigskip
+\newcounter{problemctr}
+
+\centerline{\bf Part A}
+
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Let {\em T} be a transitive 
+relation. Prove carefully or give a counterexample for the following 
+statements.
+
+\noindent
+(1) The symmetric closure of {\em T} is transitive.
+
+\noindent
+(2) The reflexive closure of {\em T} is transitive.
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Prove that in any group of more
+than one person there are always two people that know the same number of people
+within the group. Assume that knowing is symmetric.
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp For each of the following, state
+whether the result can be finite, countably infinite, or uncountable (no proof
+required). There may be more than one correct answer.
+
+\noindent
+(1) The union of two uncountable sets
+
+\noindent
+(2) The power set of a countably infinite set
+
+\noindent
+(3) The intersection of two uncountable sets
+
+\noindent
+(4) The intersection of countably many uncountable sets
+
+\noindent
+(5) The set difference of two uncountable sets
+
+\noindent
+(6) The union of uncountably many countably infinite sets
+
+
+\bigskip
+\bigskip
+\centerline{\bf Part B}
+
+\addtocounter{problemctr}{1}
+\bigskip
+
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Are the following statements true
+or false? Justify your answers with a proof or counterexample.
+
+\noindent
+(1) If $L_1$ and $L_2$ are both infinite languages, $L_1L_2$ contains a string 
+that is in neither $L_1$ nor $L_2$.
+
+\noindent
+(2) If $L$ is finite, then $|L^*| > |L|$.
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$\pp Prove or disprove: the union of
+countably many countably infinite sets is countable. 
+
+%Aside: You may assume the Axiom of Choice (if you don't know what that means, don't worry).
+
+
+\addtocounter{problemctr}{1}
+\bigskip
+\noindent
+$\underline{\rm Problem\ \theproblemctr}$ (Extra Credit)\pp
+\noindent
+There are $N$ soldiers lined up, about to execute a hapless
+prisoner. The lieutenant, who begins the firing process, is
+located at one end of the line. The soldiers all want to fire
+simultaneously. Unfortunately, the soldiers can only talk to their
+immediate neighbors on the left and right. In addition, these
+soldiers are not very intelligent, and they are just finite automata.
+Thus, they only have {\em constant
+memory\/}, independent of $N$. Notice that constant memory is very
+little. It is not enough even to count up to $N$; this requires
+$\log (n)$ bits. It is not enough to have a name, because unique
+names also require $\log (n)$ bits.
+
+\noindent
+Devise a procedure that allows these soldiers to fire in unison. The
+algorithm should have running time $O(n)$.
+
+\noindent
+Note that they move and interact at exactly
+the same speed; i.e., they are synchronized.
+
+\end{document}
