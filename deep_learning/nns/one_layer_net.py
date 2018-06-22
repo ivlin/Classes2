@@ -3,11 +3,11 @@ import random as rand
 
 def init_net():
     layers=[]
-    layers.append([[rand.random(), rand.random(), rand.random()],
-                   [rand.random(), rand.random(), rand.random()],
-                   [rand.random(), rand.random(), rand.random()],
-                   [rand.random(), rand.random(), rand.random()]])
-    layers.append([[rand.random(), rand.random(), rand.random(), rand.random()]])
+    layers.append(np.subtract([[rand.random(), rand.random(), rand.random()],
+                               [rand.random(), rand.random(), rand.random()],
+                               [rand.random(), rand.random(), rand.random()],
+                               [rand.random(), rand.random(), rand.random()]],1))
+    layers.append(np.subtract([[rand.random(), rand.random(), rand.random(), rand.random()]],1))
     return layers
 
 #sigmoid
@@ -17,24 +17,23 @@ def activation(input_val, is_derivative):
     return np.multiply(input_val,np.add(1.0,np.multiply(-1,input_val)))
 
 def train(net, input_v, output_v, learn_rate):
-    for i in xrange(10000):
-        print "iteration", i
+    for i in xrange(1000):
+        #print("iteration", i)
         out=[]
-        cur_out=input_v[i%len(input_v)].T
+        cur_out=input_v.T
         for layer in net:
             cur_out=activation(layer*cur_out,False)
             out.append(cur_out)
-        print "    predicted: ", cur_out
-        print "    actual: ", output_v[i%len(input_v)]
+        #print("    predicted: ", cur_out)
+        #print("    actual: ", output_v[i%len(input_v)])
+        print("    err:", str(np.mean(np.abs(np.subtract(output_v,cur_out)))))
 
-        l2_error=np.subtract(output_v[i%len(input_v)],cur_out)
+        l2_error=np.subtract(output_v,cur_out.T)
         l2_gradient=activation(out[1],True)
-        net[1]=np.add(net[1],learn_rate*np.multiply(l2_error,np.multiply(l2_gradient,out[0].T)))
+        net[1]=np.add(net[1],learn_rate*np.multiply(np.multiply(l2_error,l2_gradient),out[0].T))
         
         l1_gradient=activation(out[0],True)
-        l1_error=np.multiply(np.multiply(net[0],l2_error),l1_gradient)
-        net[0]=np.add(net[0],learn_rate*l1_gradient*np.multiply(l1_error,np.multiply(l1_gradient,input_v[i%len(input_v)].T)))
-
+        net[0]=np.add(net[0],learn_rate*np.multiply(np.multiply(np.multiply(l2_error,l2_gradient),net[1]),l1_gradient.T).T*input_v)
         
 if __name__ == "__main__":
     input_vals=np.matrix([[0,0,1],
@@ -43,4 +42,4 @@ if __name__ == "__main__":
                           [1,1,1]])
     output_vals=np.matrix([[0.0],[1.0],[1.0],[0.0]])
     net=init_net()
-    train(net,input_vals,output_vals, 1)
+    train(net,input_vals,output_vals, 0.1)

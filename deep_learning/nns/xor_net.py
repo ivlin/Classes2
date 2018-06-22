@@ -21,7 +21,7 @@ def activation(input_val, is_derivative):
     '''
 
 def train(net, input_v, output_v, learn_rate):
-    for i in xrange(10):
+    for i in xrange(10000):
         print "iteration", i
         out=[]
         cur_out=input_v[i%len(input_v)].T
@@ -46,4 +46,4 @@ if __name__ == "__main__":
                           [1.0,1.0]])
     output_vals=np.matrix([[0.0],[1.0],[1.0],[0.0]])
     net=init_net()
-    train(net,input_vals,output_vals, 1.0)
+    train(net,input_vals,output_vals, 0.001)
