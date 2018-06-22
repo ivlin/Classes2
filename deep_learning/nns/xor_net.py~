@@ -1,0 +1,56 @@
+import numpy as np
+import random as rand
+
+def init_net():
+    layers=[]
+    layers.append([[rand.random(), rand.random(), rand.random()],
+                   [rand.random(), rand.random(), rand.random()],
+                   [rand.random(), rand.random(), rand.random()],
+                   [rand.random(), rand.random(), rand.random()]])
+    layers.append([[rand.random(), rand.random(), rand.random(), rand.random()]])
+    return layers
+
+#sigmoid
+def activation(input_val, is_derivative):
+    if not is_derivative:
+        return 1.0/(1.0+np.exp(-1*input_val))
+    return np.multiply(input_val,np.add(1.0,np.multiply(-1,input_val)))
+
+def train(net, input_v, output_v, learn_rate):
+    for i in xrange(10000):
+        print "iteration", i
+
+        a=np.matrix(input_v[i%4].T)
+        out=[]
+        for layer in net:
+            a=layer*a
+            a=activation(a,False)# for el in a]
+            out.append(a)
+            
+        error2=output_v[i%4]-a[0]
+        layer2_grad=np.multiply(error2,activation(net[1],True))
+        net[1]+=learn_rate*np.multiply(layer2_grad,out[0].T)
+
+        print "     error: ", error2
+        print "     ", a, output_v[i%4]
+        
+        error1=np.multiply(error2,net[0])
+        layer1_grad=np.multiply(error1,activation(net[0],True))
+        net[0]+=learn_rate*np.multiply(1,layer1_grad*input_v[i%4].T)
+        
+        
+if __name__ == "__main__":
+    '''
+    input_vals=np.matrix([[0,0,1],
+                          [0,1,1],
+                          [1,0,1],
+                          [1,1,1]])
+    '''
+    input_vals=np.matrix([[0,0.0,1.0],
+                          [0,1.0,1.0],
+                          [0,1.0,1.0],
+                          [0,0.0,1.0]])
+    
+    output_vals=np.matrix([[0.0],[1.0],[1.0],[0.0]])
+    net=init_net()
+    train(net,input_vals,output_vals, 1)
