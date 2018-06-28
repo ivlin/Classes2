@@ -1,4 +1,4 @@
-import sys
+import sys, math
 #ams math
 import numpy as np
 import tensorflow as tf
@@ -11,10 +11,10 @@ sb.set()
 
 BATCH_SIZE=100
 NUM_FEATURES=2
-D_TO_G_STEPS=20 #k - ratio of discriminator to generator optimization steps
+D_TO_G_STEPS=5 #k - ratio of discriminator to generator optimization steps
 GENERATOR_LAYERS=[10,10,10]
-DISCRIMINATOR_LAYERS=[10,10,10]
-NUM_ITERATIONS=5000
+DISCRIMINATOR_LAYERS=[10,10]
+NUM_ITERATIONS=2000
 
 help_clause="""USAGE: python my_gan.py [--generator-layers (int list)] [--discriminator (int list)] [--batch-size (int)] [--features (int)] [--k-ratio (int)]
         --generator-layers          takes a python-formatted list of integers representing the width of each hidden layer
@@ -47,24 +47,45 @@ def load_params(arglist):
 #PART 1: DATA GENERATION
 
 def generate_true_data(num_samples):
-    sample_input=np.random.normal(-1.0,1.0,(num_samples, NUM_FEATURES))
+    sample_input=np.random.normal(0,5,(num_samples, NUM_FEATURES))
     for i in sample_input:
-        i[1]=i[0]*i[0]
+        i[1]=math.cos(i[0])
     return sample_input
 
 def generate_uniform_data(num_samples):
     return np.random.uniform(-1.0,1.0,size=[num_samples, NUM_FEATURES])
 
 #PART 2: GENERATOR AND DISCRIMINATOR
+def minibatch(input_v, num_kernels=5, kernel_dim=3):
+    # initializes a num_kernels by kernel_dim size tensor with weights generated of stddev 0.02
+    # linear(input, num_kernels * kernel_dim, scope='minibatch', stddev=0.02)
+    with tf.variable_scope("minibatch",reuse=tf.AUTO_REUSE):
+        #tensor of size input_rows x num_kernels*kernel_dim
+        tens=tf.get_variable('minibatch_tensor', shape=[input_v.get_shape()[1], num_kernels*kernel_dim], \
+            initializer=tf.random_normal_initializer(stddev=0.2))
+        bias=tf.get_variable('minibatch_bias', num_kernels*kernel_dim)
+    #apply the tensor and bias - produce a num_kernels*num_rows
+
+    product = tf.matmul(input_v,tens)+bias
+    #reshapes the transformed matrix into num_kernels x kernel_dim matrix
+    activation = tf.reshape(product, (-1, num_kernels, kernel_dim))
+    #add another column to the end of each activation row
+    diffs = tf.expand_dims(activation, 3) - \
+        tf.expand_dims(tf.transpose(activation, [1, 2, 0]), 0)
+    #compute the L1 norm
+    abs_diffs = tf.reduce_sum(tf.abs(diffs), 2)
+    #exponentiate
+    minibatch_features = tf.reduce_sum(tf.exp(-abs_diffs), 2)
+    return tf.concat([input_v, minibatch_features], 1)
 
 def generator(input_data, layer_sizes, reuse=False):
     #create shared variables that can be reaccessed later
     with tf.variable_scope("GAN/Generator",reuse=reuse):
-        layers=[]
+        layers=[input_data]
         for layer_size in layer_sizes:
             #tf.layers defines the interface for a densely defined layer that performs activation(input*kernel+bias)
             #returns input_data with the last dimension of size units
-            layers.append(tf.layers.dense(inputs=input_data,\
+            layers.append(tf.layers.dense(inputs=layers[-1],\
                 units=layer_size,\
                 activation=tf.nn.leaky_relu))
         output=tf.layers.dense(layers[-1], NUM_FEATURES)
@@ -73,14 +94,15 @@ def generator(input_data, layer_sizes, reuse=False):
 def discriminator(input_data, layer_sizes, reuse=False):
     #create shared variables that can be reaccessed later
     with tf.variable_scope("GAN/Discriminator",reuse=reuse):
-        layers=[]
+        layers=[input_data]
         for layer_size in layer_sizes:
             #tf.layers defines the interface for a densely defined layer that performs activation(input*kernel+bias)
             #returns input_data with the last dimension of size units
-            layers.append(tf.layers.dense(inputs=input_data,\
+            layers.append(tf.layers.dense(inputs=layers[-1],\
                 units=layer_size,\
                 activation=tf.nn.leaky_relu))
-        output=tf.layers.dense(layers[-1], NUM_FEATURES)
+        #layers.append(minibatch(layers[-1]))
+        output=tf.layers.dense(layers[-1], 1)
     return output
 
 if __name__=="__main__":
@@ -156,9 +178,9 @@ if __name__=="__main__":
         #train discriminator for k steps
         for i in xrange(D_TO_G_STEPS):
             #1st argument: fetch: runs necessary graph fragments to generate each tensor in fetch
-            d_loss, ds=sess.run([discriminator_loss,disc_step],feed_dict={noise:uniform_noise, \
+            abc, d_loss, ds=sess.run([generated_guesses,discriminator_loss,disc_step],feed_dict={noise:uniform_noise, \
                 train_data:true_data})
-            #print d_loss
+            #print abc
 
         #train generator
         true_data=generate_true_data(BATCH_SIZE)
