@@ -115,8 +115,8 @@ def discriminator(x,reuse=False,weights=None):
         with tf.variable_scope("GAN/Discriminator",reuse=reuse):
             # Create the model
             #hidden layer 1
-            h1=tf.Variable(tf.random_uniform([784,1],minval=-0.01,maxval=0.01),name="h1")
-            h1_b=tf.Variable(tf.random_uniform([1,1],minval=-0.01,maxval=0.01),name="h1_bias")
+            h1=tf.Variable(tf.random_uniform([784,10],minval=-0.01,maxval=0.01),name="h1")
+            h1_b=tf.Variable(tf.random_uniform([1,10],minval=-0.01,maxval=0.01),name="h1_bias")
             #h1=tf.get_variable("h1",[784,10],initializer=tf.initializers.random_uniform)
             #h1_b=tf.get_variable("h1_bias",[1,10],initializer=tf.initializers.random_uniform)
             h1_act=tf.nn.softmax(tf.matmul(x,h1)+h1_b)
@@ -167,7 +167,7 @@ def train_gan(args):
     generators_optimizers=[]
     gen_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,scope="GAN/Generator")
     for ind in xrange(len(generators)):
-        generators_loss.append(tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(labels=ind*tf.ones([100],dtype=tf.int64), logits=fake_y_vals[ind])))
+        generators_loss.append(tf.losses.sparse_softmax_cross_entropy(labels=ind*tf.ones([100],dtype=tf.int64), logits=fake_y_vals[ind]))
         generators_optimizers.append(tf.train.GradientDescentOptimizer(0.1).minimize(generators_loss[ind],var_list=gen_vars))
 
     counter=tf.Variable(0)
@@ -175,9 +175,10 @@ def train_gan(args):
         if i==None:
             counter+=1
 
-    disc_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=tf.ones_like(y), logits=y)+tf.nn.softmax_cross_entropy_with_logits(labels=tf.zeros_like(fake_y), logits=fake_y))
+    #disc_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=tf.ones_like(y), logits=y)+\
+    #    tf.nn.softmax_cross_entropy_with_logits(labels=tf.zeros_like(fake_y), logits=fake_y))
 
-    #disc_loss=tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(labels=y_labels, logits=y))
+    disc_loss=tf.losses.sparse_softmax_cross_entropy(labels=y_labels, logits=y)
     disc_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES,scope="GAN/Discriminator")
     disc_train_step = tf.train.GradientDescentOptimizer(0.1).minimize(disc_loss,var_list=disc_vars)
 
